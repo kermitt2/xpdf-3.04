@@ -36,6 +36,8 @@ OTHERLIBS = @LIBS@ @libpaper_LIBS@ @EXTRA_LIBS@ \
 	-L$(GOOLIBDIR) -lGoo
 
 CXX = @CXX@
+AR = @AR@
+RANLIB = @RANLIB@
 
 LIBPREFIX = @LIBPREFIX@
 EXE = @EXE@
@@ -117,12 +119,73 @@ CXX_SRC = \
 
 #------------------------------------------------------------------------
 
-all: xpdf$(EXE) pdftops$(EXE) pdftotext$(EXE) pdftohtml$(EXE) \
+all: $(LIBPREFIX)Xpdf.a xpdf$(EXE) pdftops$(EXE) pdftotext$(EXE) pdftohtml$(EXE) \
 	pdfinfo$(EXE) pdffonts$(EXE) pdfdetach$(EXE) pdftoppm$(EXE) \
 	pdftopng$(EXE) pdfimages$(EXE)
 
-all-no-x: pdftops$(EXE) pdftotext$(EXE) pdftohtml$(EXE) pdfinfo$(EXE) \
+all-no-x: $(LIBPREFIX)Xpdf.a pdftops$(EXE) pdftotext$(EXE) pdftohtml$(EXE) pdfinfo$(EXE) \
 	pdffonts$(EXE) pdfdetach$(EXE) pdfimages$(EXE)
+
+#------------------------------------------------------------------------
+
+XPDF_LIB_OBJS = \
+	AcroForm.o \
+	Annot.o \
+	Array.o \
+	BuiltinFont.o \
+	BuiltinFontTables.o \
+	Catalog.o \
+	CharCodeToUnicode.o \
+	CMap.o \
+	CoreOutputDev.o \
+	Decrypt.o \
+	Dict.o \
+	Error.o \
+	FontEncodingTables.o \
+	Form.o \
+	Function.o \
+	Gfx.o \
+	GfxFont.o \
+	GfxState.o \
+	GlobalParams.o \
+	JArithmeticDecoder.o \
+	JBIG2Stream.o \
+	JPXStream.o \
+	Lexer.o \
+	Link.o \
+	NameToCharCode.o \
+	Object.o \
+	OptionalContent.o \
+	Outline.o \
+	OutputDev.o \
+	Page.o \
+	Parser.o \
+	PDFCore.o \
+	PDFDoc.o \
+	PDFDocEncoding.o \
+	PreScanOutputDev.o \
+	PSOutputDev.o \
+	PSTokenizer.o \
+	SecurityHandler.o \
+	SplashOutputDev.o \
+	Stream.o \
+	TextOutputDev.o \
+	TextString.o \
+	UnicodeMap.o \
+	UnicodeTypeTable.o \
+	XFAForm.o \
+	XPDFApp.o \
+	XPDFCore.o \
+	XPDFTree.o \
+	XPDFViewer.o \
+	XpdfPluginAPI.o \
+	XRef.o \
+	Zoox.o
+
+$(LIBPREFIX)Xpdf.a: $(XPDF_LIB_OBJS)
+	rm -f $(LIBPREFIX)Xpdf.a
+	$(AR) $(LIBPREFIX)Xpdf.a $(XPDF_LIB_OBJS)
+	$(RANLIB) $(LIBPREFIX)Xpdf.a
 
 #------------------------------------------------------------------------
 
@@ -669,6 +732,7 @@ pdfimages$(EXE): $(PDFIMAGES_OBJS) $(GOOLIBDIR)/$(LIBPREFIX)Goo.a
 
 clean:
 	rm -f $(XPDF_OBJS) xpdf$(EXE)
+	rm -f $(XPDF_LIB_OBJS) $(LIBPREFIX)Xpdf.a
 	rm -f $(PDFTOPS_OBJS) pdftops$(EXE)
 	rm -f $(PDFTOTEXT_OBJS) pdftotext$(EXE)
 	rm -f $(PDFTOHTML_OBJS) pdftohtml$(EXE)
