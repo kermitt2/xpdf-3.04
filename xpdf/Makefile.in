@@ -124,7 +124,7 @@ all: $(LIBPREFIX)Xpdf.a xpdf$(EXE) pdftops$(EXE) pdftotext$(EXE) pdftohtml$(EXE)
 	pdftopng$(EXE) pdfimages$(EXE)
 
 all-no-x: $(LIBPREFIX)Xpdf.a pdftops$(EXE) pdftotext$(EXE) pdftohtml$(EXE) pdfinfo$(EXE) \
-	pdffonts$(EXE) pdfdetach$(EXE) pdfimages$(EXE)
+	pdffonts$(EXE) pdfdetach$(EXE) pdfimages$(EXE) pdftopng$(EXE)
 
 #------------------------------------------------------------------------
 
@@ -174,10 +174,6 @@ XPDF_LIB_OBJS = \
 	UnicodeMap.o \
 	UnicodeTypeTable.o \
 	XFAForm.o \
-	XPDFApp.o \
-	XPDFCore.o \
-	XPDFTree.o \
-	XPDFViewer.o \
 	XpdfPluginAPI.o \
 	XRef.o \
 	Zoox.o
